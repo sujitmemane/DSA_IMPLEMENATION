@@ -104,11 +104,88 @@ class TodoManager {
   deleteByName(name) {}
 
   // ---------------- Update ----------------
-  update(index, newName, newDesc) {}
+  update(index, newName, newDesc) {
+    if (this.isEmpty()) {
+      return;
+    }
 
-  markDone(index) {}
-  markUnDone(index) {}
-  toggleStatus(index) {}
+    if (index < 0 || index > this.length - 1) {
+      console.log("Invalid syntax");
+    }
+
+    // 10 20 30 40 50
+    let current = this.head;
+    let i = 0;
+    while (current !== null) {
+      if (i === index) {
+        current.name = newName;
+        current.desc = newDesc;
+      }
+      current = current.next;
+      i++;
+    }
+  }
+
+  markDone(index) {
+    if (this.isEmpty()) {
+      return;
+    }
+
+    if (index < 0 || index > this.length - 1) {
+      console.log("Invalid syntax");
+    }
+
+    // 10 20 30 40 50
+    let current = this.head;
+    let i = 0;
+    while (current !== null) {
+      if (i === index) {
+        current.status = true;
+      }
+      current = current.next;
+      i++;
+    }
+  }
+  markUnDone(index) {
+    if (this.isEmpty()) {
+      return;
+    }
+
+    if (index < 0 || index > this.length - 1) {
+      console.log("Invalid syntax");
+    }
+
+    // 10 20 30 40 50
+    let current = this.head;
+    let i = 0;
+    while (current !== null) {
+      if (i === index) {
+        current.status = false;
+      }
+      current = current.next;
+      i++;
+    }
+  }
+  toggleStatus(index) {
+    if (this.isEmpty()) {
+      return;
+    }
+
+    if (index < 0 || index > this.length - 1) {
+      console.log("Invalid syntax");
+    }
+
+    // 10 20 30 40 50
+    let current = this.head;
+    let i = 0;
+    while (current !== null) {
+      if (i === index) {
+        current.status = !current.status;
+      }
+      current = current.next;
+      i++;
+    }
+  }
 
   // ---------------- Retrieval ----------------
 
@@ -134,8 +211,50 @@ class TodoManager {
   }
 
   getFromIndex(index) {}
-  getAllDone() {}
-  getAllUnDone() {}
+  getAllDone() {
+    if (this.length == 0) {
+      console.log("No Task Found");
+      return;
+    }
+    const todos = [];
+
+    let current = this.head;
+
+    while (current !== null) {
+      if (current.status) {
+        todos.push({
+          name: current?.name,
+          desc: current?.desc,
+          status: current?.status,
+        });
+      }
+      current = current.next;
+    }
+    console.log("Done Todos", todos);
+    return todos;
+  }
+  getAllUnDone() {
+    if (this.length == 0) {
+      console.log("No Task Found");
+      return;
+    }
+    const todos = [];
+
+    let current = this.head;
+
+    while (current !== null) {
+      if (!current.status) {
+        todos.push({
+          name: current?.name,
+          desc: current?.desc,
+          status: current?.status,
+        });
+      }
+      current = current.next;
+    }
+    console.log("NotDone Todos", todos);
+    return todos;
+  }
   searchByName(name) {}
   searchByDesc(keyword) {}
 
@@ -148,12 +267,118 @@ class TodoManager {
     return false;
   }
   clearAll() {}
-  reverseList() {}
+  reverseList() {
+    // 10 20 30 40 50
+    let current = this.head;
+    let previous = null;
+    let next = null;
+    while (current !== null) {
+      next = current.next;
+      current.next = previous;
+      previous = current;
+      current = next;
+    }
+    this.head = previous;
+  }
   toArray() {}
 
   // ---------------- Advanced ----------------
-  moveTask(fromIndex, toIndex) {}
-  swapTasks(index1, index2) {}
+  moveTask(fromIndex, toIndex) {
+    // 1 ,2
+
+    // 10 20 30 40 50
+    if (
+      fromIndex < 0 ||
+      fromIndex >= this.length ||
+      toIndex < 0 ||
+      toIndex >= this.length
+    ) {
+      console.log("Invalid index");
+      return;
+    }
+
+    if (fromIndex === toIndex) return;
+
+    // 10 20 30 40 50
+
+    let prevFrom = null;
+
+    let current = this.head;
+    for (let i = 0; i < fromIndex; i++) {
+      prevFrom = current;
+      current = current.next;
+    }
+    console.log(current, "current");
+
+    if (prevFrom) {
+      prevFrom.next = current.next;
+    } else {
+      this.head = current.next;
+    }
+
+    let prevTo = null;
+    let currTo = this.head;
+    for (let j = 0; j < toIndex; j++) {
+      prevTo = currTo;
+      currTo = currTo.next;
+    }
+    //
+    if (prevTo) {
+      current.next = currTo;
+      prevTo.next = current;
+    } else {
+      current.next = this.head;
+      this.head = current;
+    }
+  }
+  swapTasks(index1, index2) {
+    if (
+      index1 < 0 ||
+      index1 >= this.length ||
+      index2 < 0 ||
+      index2 >= this.length
+    ) {
+      console.log("Invalid index");
+      return;
+    }
+
+    if (index1 === index2) return;
+
+    if (index1 > index2) {
+      [index1, index2] = [index2, index1];
+    }
+
+    let prev1 = null;
+    let curr1 = this.head;
+    for (let i = 0; i < index1; i++) {
+      prev1 = curr1;
+      curr1 = curr1.next;
+    }
+
+    let prev2 = null;
+    let curr2 = this.head;
+    for (let i = 0; i < index2; i++) {
+      prev2 = curr2;
+      curr2 = curr2.next;
+    }
+
+    if (prev1) {
+      prev1.next = curr2;
+    } else {
+      this.head = curr2;
+    }
+
+    if (prev2) {
+      prev2.next = curr1;
+    } else {
+      this.head = curr1;
+    }
+
+    const temp = curr1.next;
+    curr1.next = curr2.next;
+    curr2.next = temp;
+  }
+
   sortByName() {}
   sortByStatus() {}
   cloneList() {}
@@ -165,6 +390,12 @@ todoManager.insertAtStart("Gym", "Go to gym at 5");
 todoManager.insertAtEnd("Sleep", "Sleeping at 10");
 todoManager.insertAtEnd("Dance", "Dance at 7");
 todoManager.insertAtIndex(1, "TV", "TV at 4");
+// todoManager.getAll();
+// todoManager.deleteLast();
+// todoManager.update(2, "TV Man", "TV new desc");
+// todoManager.getAll();
+
+// todoManager.reverseList();
 todoManager.getAll();
-todoManager.deleteLast();
+todoManager.swapTasks(2, 0);
 todoManager.getAll();
