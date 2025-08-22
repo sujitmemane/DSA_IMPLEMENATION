@@ -1,3 +1,6 @@
+// TODO
+// 14
+
 // ===============================
 // 1. Largest Element in an Array
 // Example: arr = [2, 5, 1, 3, 0] → Output: 5
@@ -11,7 +14,7 @@ function largestElement(arr) {
   }
   return max;
 }
-console.log(largestElement([2, 5, 1, 3, 0]));
+// console.log(largestElement([2, 5, 1, 3, 0]));
 
 // ===============================
 // 2. Second Largest Element in an Array without sorting
@@ -36,7 +39,7 @@ function secondLargest(arr) {
 
   return secondLargest;
 }
-console.log(secondLargest([2, 5, 1, 3, 0]));
+// console.log(secondLargest([2, 5, 1, 3, 0]));
 
 // ===============================
 // 3. Check if the array is sorted
@@ -53,7 +56,7 @@ function isSorted(arr) {
   }
   return true;
 }
-console.log(isSorted([1, 2, 3, 4]));
+// console.log(isSorted([1, 2, 3, 4]));
 
 // ===============================
 // 4. Remove duplicates from Sorted array
@@ -61,7 +64,7 @@ console.log(isSorted([1, 2, 3, 4]));
 function removeDuplicates(arr) {
   // Write your code here
 }
-console.log(removeDuplicates([1, 1, 2, 2, 3]));
+// console.log(removeDuplicates([1, 1, 2, 2, 3]));
 
 // ===============================
 // 5. Left Rotate an array by one place
@@ -77,7 +80,7 @@ function leftRotateByOne(arr, k = 2) {
   return resultArr;
   // Write your code here
 }
-console.log(leftRotateByOne([1, 2, 3, 4, 5]));
+// console.log(leftRotateByOne([1, 2, 3, 4, 5]));
 
 // ===============================
 // 6. Left Rotate an array by D places
@@ -85,7 +88,7 @@ console.log(leftRotateByOne([1, 2, 3, 4, 5]));
 function leftRotateByD(arr, d) {
   // Write your code here
 }
-console.log(leftRotateByD([1, 2, 3, 4, 5], 2));
+// console.log(leftRotateByD([1, 2, 3, 4, 5], 2));
 
 // ===============================
 // 7. Move Zeros to end
@@ -110,7 +113,7 @@ function moveZeros(arr) {
   }
   return resultArr;
 }
-console.log(moveZeros([0, 1, 0, 3, 12]));
+// console.log(moveZeros([0, 1, 0, 3, 12]));
 
 // ===============================
 // 8. Linear Search
@@ -118,69 +121,144 @@ console.log(moveZeros([0, 1, 0, 3, 12]));
 function linearSearch(arr, x) {
   // Write your code here
 }
-console.log(linearSearch([1, 2, 3, 4], 3));
+// console.log(linearSearch([1, 2, 3, 4], 3));
 
 // ===============================
 // 9. Find the Union of two arrays
 // Example: arr1=[1,2,3], arr2=[2,3,4] → Output: [1,2,3,4]
 function findUnion(arr1, arr2) {
   // Write your code here
+  // Init one arry make combine arr of both then loop through it and based on present push in new arr
 }
-console.log(findUnion([1, 2, 3], [2, 3, 4]));
+// console.log(findUnion([1, 2, 3], [2, 3, 4]));
 
 // ===============================
 // 10. Find missing number in an array (1 to N)
 // Example: arr = [1,2,4,5], N=5 → Output: 3
 function findMissingNumber(arr, N) {
   // Write your code here
+
+  //
+  let checker = 1;
+  for (let num of arr) {
+    if (num !== checker) {
+      return checker;
+    }
+    checker++;
+  }
+  return checker;
 }
-console.log(findMissingNumber([1, 2, 4, 5], 5));
+
+// console.log(findMissingNumber([1, 2, 3, 4, 6], 5));
 
 // ===============================
 // 11. Maximum Consecutive Ones
 // Example: arr = [1,1,0,1,1,1] → Output: 3
 function maxConsecutiveOnes(arr) {
   // Write your code here
+  let n = arr.lenght;
+  let max = 0;
+  for (let num of arr) {
+    if (num === 1) {
+      max++;
+    } else {
+      max = 0;
+    }
+  }
+  return max;
 }
-console.log(maxConsecutiveOnes([1, 1, 0, 1, 1, 1]));
+// console.log(maxConsecutiveOnes([1, 1, 0, 1, 1]));
 
 // ===============================
 // 12. Find the number that appears once, others twice
 // Example: arr = [2,2,1] → Output: 1
 function singleNumber(arr) {
   // Write your code here
+  for (let num of arr) {
+    const current = num;
+    let count = 0;
+    for (secondNum of arr) {
+      if (secondNum === current) {
+        count++;
+      }
+    }
+    if (count === 1) {
+      return current;
+    }
+  }
 }
-console.log(singleNumber([2, 2, 1]));
+// console.log(singleNumber([2, 2, 1, 1, 3]));
 
 // ===============================
 // 13. Longest subarray with given sum K (positives)
 // Example: arr=[1,2,3,1,1,1,1,4,2,3], K=3 → Output: 2
 function longestSubarraySumKPos(arr, K) {
   // Write your code here
+  let left = 0;
+  let sum = 0;
+  let maxLen = 0;
+  for (let right = 0; right < arr.lenght; right++) {
+    sum += arr[right];
+    while (sum > K) {
+      sum -= arr[left];
+      left++;
+    }
+
+    if (sum === K) {
+      maxLen = Math.max(maxLen, right - left + 1);
+    }
+  }
+  return maxLen;
 }
-console.log(longestSubarraySumKPos([1, 2, 3, 1, 1, 1, 1, 4, 2, 3], 3));
+// console.log(longestSubarraySumKPos([1, 2, 3, 1, 1, 1, 1, 4, 2, 3], 3));
 
 // ===============================
 // 14. Longest subarray with sum K (Positives + Negatives)
 // Example: arr=[1,-1,5,-2,3], K=3 → Output: 4
 function longestSubarraySumK(arr, K) {
   // Write your code here
+
+  let left = 0;
+  let sum = 0;
+  let maxLen = 0;
+  for (let right = 0; right < arr.lenght; right++) {
+    sum += arr[right];
+    while (sum > K) {
+      sum -= arr[left];
+      left++;
+    }
+    if (sum === K) {
+      maxLen = Math.max(maxLen, right - left + 1);
+    }
+  }
+  return maxLen;
 }
-console.log(longestSubarraySumK([1, -1, 5, -2, 3], 3));
+// console.log(longestSubarraySumK([1, -1, 5, -2, 3], 3));
 
 // ===============================
 // 15. 2Sum Problem
 // Example: arr=[2,7,11,15], target=9 → Output: [0,1]
 function twoSum(arr, target) {
+  const map = new Map();
+  for (let i = 0; i < arr.length; i++) {
+    const num = arr[i];
+    const compliment = target - arr[i];
+    if (map.has(compliment)) {
+      return [map.get(compliment), i];
+    }
+    map.set(num, i);
+  }
+
   // Write your code here
 }
-console.log(twoSum([2, 7, 11, 15], 9));
+// console.log(twoSum([2, 7, 11, 15], 9));
 
 // ===============================
 // 16. Sort an array of 0's 1's and 2's
 // Example: arr=[0,2,1,2,0] → Output: [0,0,1,2,2]
 function sort012(arr) {
   // Write your code here
+  // Easy
 }
 console.log(sort012([0, 2, 1, 2, 0]));
 
